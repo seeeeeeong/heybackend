@@ -85,30 +85,40 @@ spring:
       host: localhost
       port: 6379
 
-
 ---
-#spring.config.active.on-profile: prod
-#
-#spring:
-#  datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/hey
-#    username: ${SPRING_DATASOURCE_USERNAME}
-#    password: ${SPRING_DATASOURCE_PASSWORD}
-#
-#  data:
-#    redis:
-#      host: redis
-#      port: 6379
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#      format_sql: true
-#    show-sql: true
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
-#
-#
-#
-#
-#
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://hey-rds-db.c34gm6wka38b.ap-northeast-2.rds.amazonaws.com/hey
+    username: postgres
+    password: dltlstjd!98
+    hikari:
+      connection-timeout: 3000
+      maximum-pool-size: 5
+      max-lifetime: 30000
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        format_sql: true
+    show-sql: true
+
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+  server:
+    port: 8080
+
+  logging:
+    level:
+      org.hibernate: DEBUG
+      org.springframework.orm.jpa: DEBUG
